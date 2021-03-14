@@ -8,6 +8,8 @@ class MyDrone(Tello):
     def __init__(self, location):
         super().__init__()
         self.loc = location
+
+        # Initialize Tello Drone
         self.connect()
         self.for_back_velocity = 0
         self.left_right_velocity = 0
@@ -18,6 +20,8 @@ class MyDrone(Tello):
         self.streamon()
         print(self.get_battery())
         print('Cuda Devices', dlib.cuda.get_num_devices())
+
+        # Load known faces for recognition
         self.kwn_names, self.kwn_encoding = load_known_faces(self.loc)
 
     def get_fame(self, w, h):
@@ -28,6 +32,8 @@ class MyDrone(Tello):
         return frame
 
     def detect_face(self, img):
+
+        # Fetch face location from the frame with 128 encoding of face landmarks
         curr_face_loc, curr_encode_img = load_encode_loc(img, 2)
 
         face_list = []
@@ -36,6 +42,8 @@ class MyDrone(Tello):
 
         for (top, right, bottom, left), encode_img in zip(curr_face_loc, curr_encode_img):
             matches, face_dis = get_match_facedis(self.kwn_encoding, encode_img)
+
+            # Fetching the index of the matched face
             idx = np.argmin(face_dis)
 
             cv2.rectangle(img, (left, top), (right, bottom), (0, 255, 2), 2)
@@ -82,7 +90,6 @@ class MyDrone(Tello):
             self.yaw_velocity = speed_yaw
             self.up_down_velocity = - speed_up_dwn
             self.for_back_velocity = - speed_for_back
-
 
         else:
             self.for_back_velocity = 0
