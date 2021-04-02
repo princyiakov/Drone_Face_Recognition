@@ -1,6 +1,6 @@
 from djitellopy import Tello
 import numpy as np
-from Facenet_Recognition import *
+from facenet_recognition import *
 import dlib
 
 
@@ -53,9 +53,7 @@ class MyDrone(Tello):
                 cx = left + w // 2
                 cy = top + h // 2
                 area = w * h
-                # cv2.putText(img, name, (bottom, left), cv2.FONT_HERSHEY_COMPLEX, 1,
-                #             (255, 255,
-                #              255), 1)
+
                 for idx, info in enumerate(info_list):
                     cv2.putText(img, info, (bottom, int(left*idx*0.2)), cv2.FONT_HERSHEY_COMPLEX, 1,
                                 (0, 0, 255), 1)

@@ -28,14 +28,14 @@ status_list = []  # list of current Status of the person
 since_list = []  # list of date of the status reported of person
 
 for img, idx in loader:
-    face = mtcnn(img)  # noticed mtcnn doesnt for for images more than 1MB
+    face = mtcnn(img)  # noticed mtcnn doesnt recognise for images more than 1MB
     emb = resnetv1(
         face.unsqueeze(0))  # passing cropped face into resnet model to get embedding matrix
     embedding_list.append(emb.detach())  # result in embedding matrix is stored in a list
     if idx == info.iloc[idx, 0]:
         name_list.append(info.iloc[idx, 2])  # names are stored in a list
-        status_list.append(info.iloc[idx, 3])
-        since_list.append(info.iloc[idx, 4])
+        status_list.append(info.iloc[idx, 3]) # status are stored in a list
+        since_list.append(info.iloc[idx, 4]) # date of the status update are stored in a list
 
 data = [name_list, embedding_list, status_list, since_list]
 torch.save(data, 'known_faces.pt')  # saving the trained model and the database in .pt file
