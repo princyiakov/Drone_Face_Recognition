@@ -4,3 +4,6 @@ pandas==1.2.3
 torchvision==0.8.0
 pillow==8.1.2
 djitellopy==1.5
+dlib==19.21.99
+setuptools==49.6.0
+pygame==2.0.1

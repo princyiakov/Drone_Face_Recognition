@@ -15,14 +15,8 @@ def main():
     args = parser.parse_args()
     drone = MyDrone(args.model_loc)
 
-    p_error = 0
-    p_up_dwn_error = 0
-    p_for_back_error = 0
-    pid = [0.5, 0, 0.5]
-    # w, h = 360, 240
     w, h = 480, 360
 
-    start_flight = 1  # Set 1 to not take off
 
     gmt = time.gmtime()
     ts = calendar.timegm(gmt)
@@ -30,15 +24,10 @@ def main():
     out = cv2.VideoWriter(filenm, cv2.VideoWriter_fourcc('M', 'J', 'P', 'G'), 10, (w, h))
 
     while True:
-        if start_flight == 0:
-            drone.takeoff()
-            start_flight = 1
         img = drone.get_fame(w, h)
         img, info = drone.detect_face(img)
         print(info)
-        p_error, p_up_dwn_error, p_for_back_error = drone.track_face(info, w, h, pid, p_error,
-                                                                     p_up_dwn_error,
-                                                                     p_for_back_error)
+        drone.get_keyboard_control()
         out.write(img)
         cv2.imshow('Drone Output', img)
 

@@ -2,12 +2,15 @@ from djitellopy import Tello
 import numpy as np
 from facenet_recognition import *
 import dlib
+import pygame
 
 
 class MyDrone(Tello):
     def __init__(self, location):
         super().__init__()
         self.loc = location
+        pygame.init()
+        self.win = pygame.display.set_mode((400, 400))
 
         # Initialize Tello Drone
         self.connect()
@@ -55,7 +58,8 @@ class MyDrone(Tello):
                 area = w * h
 
                 for idx, info in enumerate(info_list):
-                    cv2.putText(img, info, (bottom, int(left*idx*0.2)), cv2.FONT_HERSHEY_COMPLEX, 1,
+                    cv2.putText(img, info, (bottom, int(left * idx * 0.2)),
+                                cv2.FONT_HERSHEY_COMPLEX, 1,
                                 (0, 0, 255), 1)
 
                 face_list.append([cx, cy])
@@ -98,3 +102,58 @@ class MyDrone(Tello):
                                  self.yaw_velocity)
 
         return error_yaw, error_up_dwn, error_for_back
+
+    def get_key(self, key_val):
+        res = False
+        for event in pygame.event.get():
+            pass
+        key_ip = pygame.key.get_pressed()
+        my_key_ip = getattr(pygame, 'K_{}'.format(key_val))
+        if key_ip[my_key_ip]:
+            res = True
+
+        pygame.display.update()
+
+        return res
+
+    def get_keyboard_control(self):
+        speed = 30
+
+        # Set the speed based on the keyboard input
+        if self.get_key("LEFT"):
+            self.left_right_velocity = - speed
+        elif self.get_key("RIGHT"):
+            self.left_right_velocity = speed
+
+        elif self.get_key("UP"):
+            self.for_back_velocity = speed
+        elif self.get_key("DOWN"):
+            self.for_back_velocity = - speed
+
+        elif self.get_key("w"):
+            self.yaw_velocity = speed
+        elif self.get_key("r"):
+            self.yaw_velocity = - speed
+
+        elif self.get_key("a"):
+            self.up_down_velocity = speed
+        elif self.get_key("z"):
+            self.up_down_velocity = - speed
+
+        if self.get_key("q"):
+            self.land()
+
+        if self.get_key("t"):
+            self.takeoff()
+
+        if self.send_rc_control:
+            self.send_rc_control(self.left_right_velocity,
+                                 self.for_back_velocity,
+                                 self.up_down_velocity,
+                                 self.yaw_velocity)
+
+        # Reset the values
+        self.for_back_velocity = 0
+        self.left_right_velocity = 0
+        self.up_down_velocity = 0
+        self.yaw_velocity = 0
