@@ -11,6 +11,18 @@ Here is a interesting read for you  : https://www.pyimagesearch.com/2018/06/18/f
 ## Understanding FaceNet and MTCNN
 https://arsfutura.com/magazine/face-recognition-with-facenet-and-mtcnn/
 
+## What does this project do? 
+
+Provides a drone which can be navigated by user and can recognize individuals who have been reported missing (data updated in a database and photos available for training the model)
+
+## How do we achieve it ? 
+
+ 1. Reads data from an existing database containing the record of missing people. (Used a csv record here)
+
+ 2. Facial Recognition : Google FaceNet's MTCNN model extracts the face from the images  and Inception ResnetV1 provides the embeddings of the face and is stored along with the data retrieved from database in ".pt" file, implemented on Pytorch and compared with the faces transmitted live by drone.
+
+ 3. Navigation of drone : Pygame is used to navigate the drone.
+
 ## How to run the code ?
 1. `git clone https://github.com/princys-laboratory/Drone_Face_Recognition.git`
 2. `pip install -r requirements_pip.txt`

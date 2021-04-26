@@ -72,37 +72,6 @@ class MyDrone(Tello):
         else:
             return img, [[0, 0], 0]
 
-    def track_face(self, info, w, h, pid, p_error, p_up_dwn_error, p_for_back_error):
-        error_yaw = info[0][0] - w // 2
-        speed_yaw = pid[0] * error_yaw + pid[2] * (error_yaw - p_error)
-        speed_yaw = int(np.clip(speed_yaw, -100, 100))
-
-        error_up_dwn = info[0][1] - h // 2
-        speed_up_dwn = pid[0] * error_up_dwn + pid[2] * (error_up_dwn - p_up_dwn_error)
-        speed_up_dwn = int(np.clip(speed_up_dwn, -100, 100))
-
-        error_for_back = info[1] - 7000
-        speed_for_back = pid[0] * error_for_back + pid[2] * (error_for_back - p_for_back_error)
-        speed_for_back = int(np.clip(speed_for_back, -30, 30))
-        if info[0][0] != 0:
-            self.yaw_velocity = speed_yaw
-            self.up_down_velocity = - speed_up_dwn
-            self.for_back_velocity = - speed_for_back
-
-        else:
-            self.for_back_velocity = 0
-            self.left_right_velocity = 0
-            self.up_down_velocity = 0
-            self.yaw_velocity = 0
-
-        if self.send_rc_control:
-            self.send_rc_control(self.left_right_velocity,
-                                 self.for_back_velocity,
-                                 self.up_down_velocity,
-                                 self.yaw_velocity)
-
-        return error_yaw, error_up_dwn, error_for_back
-
     def get_key(self, key_val):
         res = False
         for event in pygame.event.get():
