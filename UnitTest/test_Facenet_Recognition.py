@@ -1,5 +1,5 @@
 from unittest import TestCase
-from Facenet_Recognition import load_encode_loc, cv2, load_known_faces
+from face_recognition import load_encode_loc, cv2, load_known_faces
 
 
 class TestFaceNetRecognition(TestCase):

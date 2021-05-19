@@ -47,9 +47,9 @@ def load_encode_loc(image, kwn_names, kwn_encoding, kwn_status_list, kwn_since_l
                 box_list.append(box)
                 name_list.append(name)
                 info_list.append(name)
-                info_list.append(name)
+                # info_list.append(name)
                 info_list.append(kwn_status_list[min_ind])
-                info_list.append(kwn_since_list[min_ind])
+                # info_list.append(kwn_since_list[min_ind])
     print ('Box list and name list ',box_list, name_list)
     return box_list, name_list, info_list
 
