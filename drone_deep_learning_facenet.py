@@ -1,5 +1,4 @@
 from djitellopy import Tello
-import numpy as np
 from facenet_recognition import *
 import dlib
 import pygame
@@ -29,6 +28,9 @@ class MyDrone(Tello):
             self.loc)
 
     def get_fame(self, w, h):
+        """
+        Returns the frame after resizing
+        """
         frame = self.get_frame_read()
         frame = frame.frame
         frame = cv2.resize(frame, (w, h))
@@ -36,8 +38,49 @@ class MyDrone(Tello):
         return frame
 
     def detect_face(self, img):
+        """
+        Returns list of face detected in the frame with the face area
+        """
+        # Fetch face location from the frame with 128 encoding of face landmarks
+        curr_face_loc, name_list, info_list = load_encode_loc(img, self.kwn_names,
+                                                              self.kwn_encoding,
+                                                              self.status_list, self.since_list)
+        print('Current value is ', curr_face_loc, name_list)
+        face_list = []
+        face_area = []
+        print('face loc', curr_face_loc)
+        if len(curr_face_loc):
+
+            for (top, right, bottom, left), name in zip(curr_face_loc, name_list):
+                print(top, right, bottom, left)
+                cv2.rectangle(img, (top, right), (bottom, left), (0, 255, 2), 2)
+
+                w = right - left
+                h = bottom - top
+                cx = left + w // 2
+                cy = top + h // 2
+                area = w * h
+
+                for idx, info in enumerate(info_list):
+                    cv2.putText(img, info, (bottom, int(left * idx * 0.2)),
+                                cv2.FONT_HERSHEY_COMPLEX, 1,
+                                (0, 0, 255), 1)
+
+                face_list.append([cx, cy])
+                face_area.append(area)
+
+                i = face_area.index(max(face_area))
+
+            return img, [face_list[i], face_area[i]]
+
+        else:
+            return img, [[0, 0], 0]
+
+    def detect_face_api(self, img):
 
         # Fetch face location from the frame with 128 encoding of face landmarks
+
+
         curr_face_loc, name_list, info_list = load_encode_loc(img, self.kwn_names,
                                                               self.kwn_encoding,
                                                               self.status_list, self.since_list)

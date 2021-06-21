@@ -7,6 +7,6 @@ djitellopy==1.5
 dlib==19.21.99
 setuptools==49.6.0
 pygame==2.0.1
-psycopg2==2.8.6
 flask==1.1.2
 requests==2.25.1
+werkzeug==1.0.1

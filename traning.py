@@ -1,5 +1,5 @@
 from facenet_pytorch import MTCNN, InceptionResnetV1
-
+import cv2
 import pandas as pd
 
 import torch
@@ -39,5 +39,6 @@ for img, idx in loader:
 
 data = [name_list, embedding_list, status_list, since_list]
 torch.save(data, 'known_faces.pt')  # saving the trained model and the database in .pt file
+
 
 print('Successfully trained the data ')
