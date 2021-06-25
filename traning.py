@@ -1,5 +1,4 @@
 from facenet_pytorch import MTCNN, InceptionResnetV1
-import cv2
 import pandas as pd
 
 import torch

@@ -77,9 +77,9 @@ class MyDrone(Tello):
             return img, [[0, 0], 0]
 
     def detect_face_api(self, img):
-
-        # Fetch face location from the frame with 128 encoding of face landmarks
-
+        """
+        Fetch face location from the frame with 128 encoding of face landmarks
+        """
 
         curr_face_loc, name_list, info_list = load_encode_loc(img, self.kwn_names,
                                                               self.kwn_encoding,
@@ -116,6 +116,9 @@ class MyDrone(Tello):
             return img, [[0, 0], 0]
 
     def get_key(self, key_val):
+        """
+        Fetches keyboard input which helps thr drone to maneuver
+        """
         res = False
         for event in pygame.event.get():
             pass
@@ -129,6 +132,10 @@ class MyDrone(Tello):
         return res
 
     def get_keyboard_control(self):
+        """
+        Assigns action to the pressed keyboard input which helps thr drone to maneuver
+        """
+
         speed = 30
 
         # Set the speed based on the keyboard input

@@ -74,7 +74,7 @@ def test():
     return jsonify(fetch_missingpersons)
 
 
-@app.route('/postdata', methods=['GET', 'POST'])
+@app.route('/', methods=['GET', 'POST'])
 def upload_file():
     """
     API call for HTML form to add data from the front end

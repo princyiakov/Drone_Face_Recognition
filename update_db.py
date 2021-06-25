@@ -4,8 +4,7 @@ import cv2
 import pandas as pd
 import requests
 from facenet_pytorch import MTCNN, InceptionResnetV1
-import numpy as np
-import codecs, json
+import json
 
 # Load data
 
@@ -28,11 +27,8 @@ for index, row in df.iterrows():
     arr = emb.detach().cpu().numpy()
     arr = arr.tolist()
     arr = json.dumps(arr)
-    #data['embedding'] = str(emb.detach().cpu().numpy())
     data['embedding'] = arr
     data['id'] = row['id']
-    #print(data)
-    # print(len(str(emb.detach().cpu().numpy())))
     req = requests.put('http://127.0.0.1:5000/missingperson', json=data)
     print(req.status_code)
 

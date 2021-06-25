@@ -1,8 +1,6 @@
 from unittest import TestCase
-import requests
-import pandas as pd
 from facenet_recognition import load_encode_loc_api, load_encode_loc, load_known_faces
-from utils import singleimg_embedding
+from webapp.utils import singleimg_embedding
 import cv2
 
 
