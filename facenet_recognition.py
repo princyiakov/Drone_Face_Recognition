@@ -54,11 +54,14 @@ def load_encode_loc(image, kwn_names, kwn_encoding, kwn_status_list, kwn_since_l
                 # info_list.append(name)
                 info_list.append(kwn_status_list[min_ind])
                 # info_list.append(kwn_since_list[min_ind])
-    print ('Box list and name list ',box_list, name_list)
+    print('Box list and name list ', box_list, name_list)
     return box_list, name_list, info_list
+
+
 def cal_dist(curr_emb):
     dist = torch.dist(encode_img, curr_emb).item()
     return dist
+
 
 def load_encode_loc_api(image):
     global encode_img
@@ -100,5 +103,5 @@ def load_encode_loc_api(image):
                 name_list.append(name)
                 info_list.append(name)
                 info_list.append(df['last_seen'][indx])
-    print ('Box list and name list ',box_list, name_list)
+    print('Box list and name list ', box_list, name_list)
     return box_list, name_list, info_list
