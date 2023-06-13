@@ -1,5 +1,4 @@
 # Drone_Face_Recognition
-## README yet to be updated as new features like front end for missing person registration, Integration with database has been updated recently . Stay Tuned ! 
 ## How does Face Recognition work ?
 1.The face detection process is an essential step as it detects and locates human faces in images and videos.
 2.The face capture process transforms analog information (a face) into a set of digital information (data) based on the person's facial features.
